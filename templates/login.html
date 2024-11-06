@@ -1,0 +1,13 @@
+<!-- templates/login.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Login</h2>
+    <form action="{{ url_for('auth.login') }}" method="post">
+        <label>Username: <input type="text" name="username" required></label><br>
+        <label>Password: <input type="password" name="password" required></label><br>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+{% endblock %}

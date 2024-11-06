@@ -1,0 +1,75 @@
+{
+    "users": [
+        {
+            "id": "bf9e4e37-37b7-4456-a1d4-48f2e7ac0734",
+            "name": "Ahmad Badrun",
+            "username": "niggerone",
+            "password": "scrypt:32768:8:1$EcBK1x8HeYcZnuFG$0be6376d0c09c914fb7f1534810e6d4ba10b13b33d7f50643a290eb1c8381a9e2a3200b277a33a06264dadb223f054de995c35c44d04588e647b1213c2034d1f",
+            "role": "admin",
+            "tabung": 132,
+            "kecamatan": "Camat",
+            "kelurahan": "Lurah",
+            "kode_pos": "00000"
+        },
+        {
+            "id": "766af315-e6ef-44e5-b45d-071a15b57b1c",
+            "name": "Super Mahmud",
+            "username": "superadmin",
+            "password": "scrypt:32768:8:1$kUSaM4TRqKzUmkyj$bfc091206dbc1efc61df73d3294c2f9eec8f45f1a211974a7c1da1b192fbdc4dbb8b77e5306530e3c412c6ce7bfe0f4d280c16f033e018c8f4ffdb948f31ff60",
+            "role": "superadmin",
+            "tabung": 2,
+            "kecamatan": "Rahasia",
+            "kelurahan": "Rahasia",
+            "kode_pos": "10203"
+        },
+        {
+            "id": "d168d856-557b-4815-8723-b7c8976a9e18",
+            "name": "Tes Subject",
+            "username": "tessubject@test.com",
+            "password": "scrypt:32768:8:1$nCNjCOyKzVWyiHtS$34f153226ab748483fe956bdc5170ec85f1968e59ed2f8dafbcd882e77818e1a8a47c9a91dd538e028cf741b7ee1bdfe256b2d867b4678e45c12d18c6afbedc3",
+            "role": "cashier",
+            "tabung": 140,
+            "kecamatan": "Jawa Barat",
+            "kelurahan": "Jawa Berat",
+            "kode_pos": "09123"
+        },
+        {
+            "id": "18a6edb9-5834-42ec-b9db-bfb9c5cefe59",
+            "name": "Arini Cantik",
+            "username": "cantikarini",
+            "password": "scrypt:32768:8:1$dJxG3egihaoIVsJP$89044075d2bbf7bdc89a135df616ec22526eee20cfe62a7b2d84bfa55d6b18a0a1eb0b9bf04b168a194440e3611627029d7b7e32144fc7550fc95d4290c8b9d9",
+            "role": "admin",
+            "tabung": 140,
+            "kecamatan": "Lubuk Pakam",
+            "kelurahan": "Deli Serdang",
+            "kode_pos": "10202"
+        },
+        {
+            "id": "de81ceec-20e5-4f97-9dbf-0a3105799277",
+            "name": "Azril Lutfhi Mulyadi",
+            "username": "azrilmulyadi@gms.com",
+            "password": "scrypt:32768:8:1$RckqjyaY2W2KqA1p$b56e39a48feecd8ac7152951501eb502158a153c10b1740bf7946cea76d4d2a85483182ce5bba490d19104e3259592410520490c81eae7665b76d4d2e54f2fa0",
+            "role": "cashier",
+            "tabung": 117,
+            "kecamatan": "kajgdakjh",
+            "kelurahan": "huhihsfk",
+            "kode_pos": "12893"
+        }
+    ],
+    "customers": [
+        {
+            "id": "e3b5f168-a9db-4079-956a-85e619239be3",
+            "nik": "1202079087890001",
+            "name": "Labubudin",
+            "tabung": 3,
+            "max_tabung": 6
+        },
+        {
+            "id": "396f408f-6062-48a4-b91f-b401a7d9d55b",
+            "nik": "1202079087890002",
+            "name": "Labubuah",
+            "tabung": 0,
+            "max_tabung": 6
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Struk Transaksi</h2>
+
+<p>Transaksi Berhasil!</p>
+<p>User: {{ user.name }}, Sisa Tabung: {{ user.tabung }}</p>
+<p>Customer: {{ customer.name }}, Total Tabung: {{ customer.tabung }}</p>
+<p>Jumlah Tabung yang Ditransfer: {{ jumlah_tabung }}</p>
+
+<!-- Link Kembali berdasarkan peran user -->
+{% if user.role == "cashier" %}
+    <a href="{{ url_for('auth.cashier') }}">Kembali ke Halaman Utama Cashier</a>
+{% elif user.role == "admin" %}
+    <a href="{{ url_for('auth.admin') }}">Kembali ke Halaman Utama Admin</a>
+{% elif user.role == "superadmin" %}
+    <a href="{{ url_for('auth.superadmin') }}">Kembali ke Halaman Utama Superadmin</a>
+{% else %}
+    <a href="{{ url_for('transaction.search_nik') }}">Kembali ke Menu Transaksi</a>
+{% endif %}
+{% endblock %}
