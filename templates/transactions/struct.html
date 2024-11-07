@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="container">
 <h2>Struk Transaksi</h2>
 
 <p>Transaksi Berhasil!</p>
@@ -16,5 +17,6 @@
     <a href="{{ url_for('auth.superadmin') }}">Kembali ke Halaman Utama Superadmin</a>
 {% else %}
     <a href="{{ url_for('transaction.search_nik') }}">Kembali ke Menu Transaksi</a>
+</div>
 {% endif %}
 {% endblock %}

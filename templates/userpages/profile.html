@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <center>
+        <h1>{{ user["name"] }}</h1>
+        <h3>Detail User</h3>
+        <div class="profile-container">
+            <p><strong>Username:</strong> {{ user["username"] }}</p>
+            <p><strong>Kecamatan:</strong> {{ user["kecamatan"] }}</p>
+            <p><strong>Kelurahan:</strong> {{ user["kelurahan"] }}</p>
+            <p><strong>Kode Pos:</strong> {{ user["kode_pos"] }}</p>
+        </div>
+        <!-- Link Kembali berdasarkan peran user -->
+        {% if user.role == "cashier" %}
+        <a href="{{ url_for('auth.cashier') }}">Kembali ke Halaman Utama Cashier</a>
+        {% elif user.role == "admin" %}
+        <a href="{{ url_for('auth.admin') }}">Kembali ke Halaman Utama Admin</a>
+        {% elif user.role == "superadmin" %}
+        <a href="{{ url_for('auth.superadmin') }}">Kembali ke Halaman Utama Superadmin</a>
+        {% else %}
+        <a href="{{ url_for('transaction.search_nik') }}">Kembali ke Menu Transaksi</a>
+        {% endif %}
+    </center>
+</body>
+
+</html>

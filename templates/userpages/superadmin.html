@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Welcome, Superadmin</h1>
+    <p>You have access to Superadmin features.</p>
+
+    <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Tambah User</a>
+    <a class="btn btn-primary" href="{{ url_for('auth.get_all_users') }}">View Users</a>
+    <a class="btn btn-primary" href="{{ url_for('transaction.transaction_history') }}">Transaksi</a>
+    <a class="btn btn-primary" href="{{ url_for('auth.atur_produk') }}">Atur Produk</a>
+    <a class="btn btn-primary" href="{{ url_for('auth.profile') }}">Profil</a>
+    <a class="btn btn-primary" href="{{ url_for('auth.get_all_customers') }}">View Customers</a>
+    
+    <form action="{{ url_for('transaction.search_nik') }}" method="POST">
+        <label for="nik">Cari NIK:</label>
+        <input type="number" id="nik" name="nik" required>
+        <button type="submit" class="btn btn-primary">Cari</button>
+    </form>
+    
+    <button class="btn btn-logout" onclick="showLogoutModal()">Logout</button>
+</div>
+
+<!-- Modal Konfirmasi Logout -->
+<div id="logoutModal" class="modal">
+    <div class="modal-content">
+        <h2>Confirm Logout</h2>
+        <p>Are you sure you want to logout?</p>
+        <button class="btn btn-cancel" onclick="closeLogoutModal()">Cancel</button>
+        <form action="{{ url_for('auth.logout') }}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-confirm">Logout</button>
+        </form>
+    </div>
+</div>
+
+<script>
+// Show the modal
+function showLogoutModal() {
+    document.getElementById("logoutModal").style.display = "flex";
+}
+
+// Hide the modal
+function closeLogoutModal() {
+    document.getElementById("logoutModal").style.display = "none";
+}
+
+// Hide modal if the user clicks outside of it
+window.onclick = function(event) {
+    var modal = document.getElementById("logoutModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+{% endblock %}

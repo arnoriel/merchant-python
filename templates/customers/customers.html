@@ -1,34 +1,28 @@
-<!-- templates/customers.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customers List</title>
-</head>
-<body>
+{% extends "layout.html" %}
+
+{% block content %}
     <h1>Customers List</h1>
     <a href="{{ url_for('auth.create_customer') }}">Add New Customer</a>
     <a href="{{ url_for('auth.superadmin') }}">Go Back</a>
     <table border="1">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>NIK</th>
                 <th>Name</th>
                 <th>Tabung</th>
                 <th>Max Tabung</th>
+                <th>Jenis Pengguna</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for customer in customers %}
             <tr>
-                <td>{{ customer.id }}</td>
                 <td>{{ customer.nik }}</td>
                 <td>{{ customer.name }}</td>
                 <td>{{ customer.tabung }}</td>
                 <td>{{ customer.max_tabung }}</td>
+                <td>{{ customer.jenis_pengguna }}</td>
                 <td>
                     <a href="{{ url_for('auth.edit_customer', id=customer.id) }}">Edit</a>
                     <form action="{{ url_for('auth.delete_customer', id=customer.id) }}" method="post" style="display:inline;">
@@ -39,5 +33,4 @@
             {% endfor %}
         </tbody>
     </table>
-</body>
-</html>
+{% endblock %}

@@ -12,9 +12,9 @@
     <label>Role: 
         <select name="role" required>
             <option disabled {{ 'selected' if user['role'] is none else '' }}>Pilih</option>
-            <option value="1" {% if user['role'] == 1 %}selected{% endif %}>Superadmin</option>
-            <option value="2" {% if user['role'] == 2 %}selected{% endif %}>Admin</option>
-            <option value="3" {% if user['role'] == 3 %}selected{% endif %}>Cashier</option>
+            <option value="superadmin" {% if user['role'] == superadmin %}selected{% endif %}>Superadmin</option>
+            <option value="admin" {% if user['role'] == admin %}selected{% endif %}>Admin</option>
+            <option value="cashier" {% if user['role'] == cashier %}selected{% endif %}>Cashier</option>
         </select>
     </label><br>
 

@@ -1,7 +1,7 @@
 # auth.py
 from flask import Blueprint, request, jsonify, render_template, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, jwt_required, JWTManager, get_jwt
+from flask_jwt_extended import create_access_token, jwt_required, JWTManager, get_jwt_identity
 from utils import load_data, save_data
 import uuid
 
@@ -46,7 +46,7 @@ def register():
         # Directly redirect to the list of all users after registration
         return redirect(url_for("auth.get_all_users"))
 
-    return render_template("register.html")
+    return render_template("users/register.html")
 
 # Login User
 @auth_bp.route("/login", methods=["GET", "POST"])
@@ -76,15 +76,29 @@ def login():
         response.set_cookie("access_token", access_token)
         return response
 
-    return render_template("login.html")
-
+    return render_template("auth/login.html")
 
 # Get All Users
 @auth_bp.route("/users", methods=["GET"])
 def get_all_users():
     users = load_data()["users"]
-    return render_template("users.html", users=users)
+    return render_template("users/users.html", users=users)
 
+@auth_bp.route("/aturproduk", methods=["GET"])
+@jwt_required()
+def atur_produk():
+    # Mengambil data pengguna dari file JSON atau database
+    data_json = load_data()
+    users = data_json["users"]
+
+    # Mengambil ID dari token yang sedang login
+    current_user_id = get_jwt_identity()
+    logged_in_user = next((user for user in users if user["id"] == current_user_id), None)
+    
+    if logged_in_user:
+        return render_template("userpages/aturproduk.html", current_user=logged_in_user)
+    else:
+        return jsonify({"msg": "User not found"}), 404
 
 # Update User
 @auth_bp.route("/users/update/<id>", methods=["GET", "POST"])
@@ -111,7 +125,7 @@ def update_user(id):
         save_data(data_json)  # Save all data including users and customers
         return redirect(url_for("auth.get_all_users"))
 
-    return render_template("update_user.html", user=user)
+    return render_template("users/update_user.html", user=user)
 
 # Delete Users
 @auth_bp.route("/users/delete/<id>", methods=["POST"])
@@ -122,21 +136,37 @@ def delete_user(id):
     save_data(data_json)  # Save all data including users and customers
     return redirect(url_for("auth.get_all_users"))
 
+#View Users Profile
+@auth_bp.route("/profile", methods=["GET"])
+@jwt_required()
+def profile():
+    data_json = load_data()
+    users = data_json["users"]
+    
+    # Get the ID of the logged-in user from the JWT
+    current_user_id = get_jwt_identity()
+    user = next((u for u in users if u["id"] == current_user_id), None)
+    
+    if user:
+        return render_template("userpages/profile.html", user=user)
+    else:
+        return jsonify({"msg": "User not found"}), 404
+
 # Auth Page Routes
 @auth_bp.route("/superadmin")
 @jwt_required()
 def superadmin():
-    return render_template("superadmin.html")
+    return render_template("userpages/superadmin.html")
 
 @auth_bp.route("/admin")
 @jwt_required()
 def admin():
-    return render_template("admin.html")
+    return render_template("userpages/admin.html")
 
 @auth_bp.route("/cashier")
 @jwt_required()
 def cashier():
-    return render_template("cashier.html")
+    return render_template("userpages/cashier.html")
 
 @auth_bp.route("/logout", methods=["POST"])
 @jwt_required()
@@ -152,9 +182,9 @@ def get_all_customers():
     customers = load_data()[
         "customers"
     ]  # Pastikan `load_data()` memuat data dari `data.json`
-    return render_template("customers.html", customers=customers)
+    return render_template("customers/customers.html", customers=customers)
 
-# Add Customers
+# Create Customer
 @auth_bp.route("/customers/create", methods=["GET", "POST"])
 def create_customer():
     if request.method == "POST":
@@ -166,11 +196,12 @@ def create_customer():
             "name": request.form["name"],
             "tabung": 0,
             "max_tabung": int(request.form["max_tabung"]),
+            "jenis_pengguna": request.form["jenis_pengguna"]  # Tambahkan jenis_pengguna
         }
         customers.append(new_customer)
-        save_data(data_json)  # Save all data including users and customers
+        save_data(data_json)
         return redirect(url_for("auth.get_all_customers"))
-    return render_template("create_customer.html")
+    return render_template("customers/create_customer.html")
 
 # Edit Customer
 @auth_bp.route("/customers/edit/<id>", methods=["GET", "POST"])
@@ -185,10 +216,11 @@ def edit_customer(id):
         customer["nik"] = request.form["nik"]
         customer["name"] = request.form["name"]
         customer["max_tabung"] = int(request.form["max_tabung"])
+        customer["jenis_pengguna"] = request.form["jenis_pengguna"]  # Update jenis_pengguna
         save_data(data)
         return redirect(url_for("auth.get_all_customers"))
 
-    return render_template("edit_customer.html", customer=customer)
+    return render_template("customers/edit_customer.html", customer=customer)
 
 # Delete Customer
 @auth_bp.route("/customers/delete/<id>", methods=["POST"])

@@ -34,23 +34,12 @@
             "kode_pos": "09123"
         },
         {
-            "id": "18a6edb9-5834-42ec-b9db-bfb9c5cefe59",
-            "name": "Arini Cantik",
-            "username": "cantikarini",
-            "password": "scrypt:32768:8:1$dJxG3egihaoIVsJP$89044075d2bbf7bdc89a135df616ec22526eee20cfe62a7b2d84bfa55d6b18a0a1eb0b9bf04b168a194440e3611627029d7b7e32144fc7550fc95d4290c8b9d9",
-            "role": "admin",
-            "tabung": 140,
-            "kecamatan": "Lubuk Pakam",
-            "kelurahan": "Deli Serdang",
-            "kode_pos": "10202"
-        },
-        {
             "id": "de81ceec-20e5-4f97-9dbf-0a3105799277",
             "name": "Azril Lutfhi Mulyadi",
             "username": "azrilmulyadi@gms.com",
             "password": "scrypt:32768:8:1$RckqjyaY2W2KqA1p$b56e39a48feecd8ac7152951501eb502158a153c10b1740bf7946cea76d4d2a85483182ce5bba490d19104e3259592410520490c81eae7665b76d4d2e54f2fa0",
             "role": "cashier",
-            "tabung": 117,
+            "tabung": 111,
             "kecamatan": "kajgdakjh",
             "kelurahan": "huhihsfk",
             "kode_pos": "12893"
@@ -61,15 +50,67 @@
             "id": "e3b5f168-a9db-4079-956a-85e619239be3",
             "nik": "1202079087890001",
             "name": "Labubudin",
-            "tabung": 3,
-            "max_tabung": 6
+            "tabung": 2,
+            "max_tabung": 6,
+            "jenis_pengguna": "Reguler"
         },
         {
             "id": "396f408f-6062-48a4-b91f-b401a7d9d55b",
             "nik": "1202079087890002",
             "name": "Labubuah",
             "tabung": 0,
-            "max_tabung": 6
+            "max_tabung": 6,
+            "jenis_pengguna": "Wirausaha"
+        },
+        {
+            "id": "d3c8ce1c-3d9a-4ba5-b774-12ebdbc02169",
+            "nik": "1202079087890003",
+            "name": "Legoleng",
+            "tabung": 1,
+            "max_tabung": 6,
+            "jenis_pengguna": "Reguler"
+        },
+        {
+            "id": "22a1fcd0-a2c8-4ca4-9f6a-2a529313b354",
+            "nik": "3273281307010001",
+            "name": "M Fatul",
+            "tabung": 2,
+            "max_tabung": 10,
+            "jenis_pengguna": "Reguler"
+        }
+    ],
+    "history": [
+        {
+            "id": "5f6b525c-594b-43d4-9f02-f5d4b7b5948c",
+            "customer_name": "Labubudin",
+            "customer_nik": "1202079087890001",
+            "jumlah_tabung": 1,
+            "username_responsible": "superadmin",
+            "timestamp": "2024-11-07 13:56:44"
+        },
+        {
+            "id": "bd883af0-6bb5-48d7-9a1c-ca5858d8891b",
+            "customer_name": "Legoleng",
+            "customer_nik": "1202079087890003",
+            "jumlah_tabung": 1,
+            "username_responsible": "azrilmulyadi@gms.com",
+            "timestamp": "2024-11-07 13:59:04"
+        },
+        {
+            "id": "825087b4-aeaa-40c3-979e-7183b6584434",
+            "customer_name": "Labubudin",
+            "customer_nik": "1202079087890001",
+            "jumlah_tabung": 1,
+            "username_responsible": "superadmin",
+            "timestamp": "2024-11-07 14:34:04"
+        },
+        {
+            "id": "23f8563f-2fd6-49db-8c27-715111ed7be2",
+            "customer_name": "M Fatul",
+            "customer_nik": "3273281307010001",
+            "jumlah_tabung": 2,
+            "username_responsible": "superadmin",
+            "timestamp": "2024-11-07 15:09:59"
         }
     ]
 }

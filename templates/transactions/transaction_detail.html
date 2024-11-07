@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Transaction Details</h1>
+<p>Customer Name: {{ record.customer_name }}</p>
+<p>NIK: {{ record.customer_nik }}</p>
+<p>Jumlah Tabung: {{ record.jumlah_tabung }}</p>
+<p>Timestamp: {{ record.timestamp }}</p>
+<p>Responsible User: {{ record.username_responsible }}</p> <!-- Tampilkan username pengguna yang bertanggung jawab -->
+<a href="{{ url_for('transaction.transaction_history') }}">Back to History</a>
+{% endblock %}

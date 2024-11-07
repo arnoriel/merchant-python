@@ -1,17 +1,22 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1>Welcome, Admin</h1>
-<p>You have access to admin features.</p>
+<h1>Welcome, Cashier</h1>
+<p>You have access to Cashier features.</p>
+<a class="btn-primary" style="text-decoration: none;" href="{{ url_for('transaction.transaction_history') }}">Transaksi</a>
+<a class="btn-primary" style="text-decoration: none;" href="{{ url_for('auth.atur_produk') }}">Atur Produk</a>
+<a class="btn-primary" style="text-decoration: none;" href="{{ url_for('auth.profile') }}">Profil</a>
+<br>
+<br>
 <form action="{{ url_for('transaction.search_nik') }}" method="POST">
     <label for="nik">Cari NIK:</label>
-    <input type="text" id="nik" name="nik" required>
+    <input type="number" id="nik" name="nik" required>
     <button type="submit">Cari</button>
 </form>
 <br>
+
 <!-- Tombol Logout -->
 <button class="btn-logout" onclick="showLogoutModal()">Logout</button>
-
 
 <!-- Modal Konfirmasi Logout -->
 <div id="logoutModal" class="modal">
@@ -24,58 +29,6 @@
         </form>
     </div>
 </div>
-
-<style>
-/* Modal Styles */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Overlay effect */
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 300px;
-    text-align: center;
-    border-radius: 8px;
-}
-
-/* Button Styles */
-.btn-logout {
-    padding: 10px 20px;
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.btn-cancel, .btn-confirm {
-    padding: 8px 16px;
-    margin: 5px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.btn-cancel {
-    background-color: #6c757d;
-    color: white;
-}
-
-.btn-confirm {
-    background-color: #d9534f;
-    color: white;
-}
-</style>
 
 <script>
 // Show the modal
