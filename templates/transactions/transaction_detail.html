@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <center>
+        <h1>Detail Transaksi</h1>
+    </center>
+    <br>
+    <center><b>Lunas</b></center>
+    <br>
+    <p>Pelanggan: {{ record.customer_name }}</p>
+    <p>Pembayaran: Tunai</p>
+    <p>NIK Pelanggan: {{ record.customer_nik }}</p>
+    <p>Jumlah Tabung: {{ record.jumlah_tabung }}</p>
+    <p>Timestamp: {{ record.timestamp }}</p>
+    <p>Responsible User: {{ record.username_responsible }}</p>
+    <center>
+    <a href="{{ url_for('transaction.transaction_history') }}">Back to History</a>
+    <br>
+    <br>
+    <!-- Button for cancelling the transaction -->
+    <button onclick="showCancelModal('{{ record.id }}')">Cancel Transaction</button>
+    </center>
+    <br>
+    <br>
+    <!-- Modal for cancel confirmation -->
+    <div id="cancelModal" style="display: none;">
+        <p>Apakah anda yakin untuk membatalkan transaksi ini?</p>
+        <textarea id="cancelReason" rows="3" placeholder="Alasan pembatalan..."></textarea>
+        <br>
+        <button onclick="confirmCancel('{{ record.id }}')">Batalkan Transaksi</button>
+        <br>
+        <button onclick="closeModal()">Tutup</button>
+    </div>
+
+    <script>
+        function showCancelModal(transactionId) {
+            document.getElementById("cancelModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("cancelModal").style.display = "none";
+        }
+
+        function confirmCancel(transactionId) {
+            const reason = document.getElementById("cancelReason").value;
+            if (reason) {
+                // Gunakan FormData untuk mengirim data dalam format yang sesuai untuk request.form di Flask
+                const formData = new FormData();
+                formData.append("reasons", reason);
+
+                fetch(`{{ url_for('transaction.cancel_transaction', transaction_id="") }}${transactionId}`, {
+                    method: "POST",
+                    body: formData
+                }).then(response => {
+                    window.location.href = "{{ url_for('transaction.transaction_history') }}";
+                }).catch(error => {
+                    console.error("Error:", error);
+                    alert("Terjadi kesalahan saat membatalkan transaksi.");
+                });
+            } else {
+                alert("Harap isi alasan pembatalan.");
+            }
+        }
+    </script>
+
+</div>
+{% endblock %}

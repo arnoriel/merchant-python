@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Register MyMerchant</h2>
+<form action="{{ url_for('auth.register') }}" method="post">
+    <label>Name: <input type="text" name="name"  placeholder="Name" required></label><br>
+    <label>Username: <input type="text" name="username"  placeholder="Username" required></label><br>
+    <label>Password: <input type="password" name="password"  placeholder="Password" required></label><br>
+    <label>Role: 
+        <select name="role">
+            <option selected="choose" value="choose" disabled>Pilih</option>
+            <option value="superadmin">Superadmin</option>
+            <option value="admin">Admin</option>
+            <option value="cashier">Cashier</option>
+        </select>
+    </label><br>
+    <label>Tabung: <input type="number" name="tabung" placeholder="Tabung" required></label><br>
+    <label>Kecamatan: <input type="text" name="kecamatan" placeholder="Kecamatan" required></label><br>
+    <label>Kelurahan: <input type="text" name="kelurahan" placeholder="Kelurahan" required></label><br>
+    <label>Kode Pos: <input type="number" name="kode_pos" placeholder="Kode Pos" required></label><br>
+    <button type="submit">Register</button>
+</form>
+{% endblock %}

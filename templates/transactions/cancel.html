@@ -1,0 +1,36 @@
+<!-- /templates/transactions/cancel.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Cancel History</h1>
+    <table>
+        <tr>
+            <th>Customer Name</th>
+            <th>NIK</th>
+            <th>Jumlah Tabung</th>
+            <th>Cancel Timestamp</th>
+            <th>Actions</th>
+        </tr>
+        {% for record in cancel_history %}
+        <tr>
+            <td>{{ record.customer_name }}</td>
+            <td>{{ record.customer_nik }}</td>
+            <td>{{ record.jumlah_tabung }}</td>
+            <td>{{ record.cancel_timestamp }}</td>
+            <td><a href="{{ url_for('transaction.cancel_detail', cancel_id=record.id) }}">View Details</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <!-- Link Kembali berdasarkan peran user -->
+{% if user.role == "cashier" %}
+<a href="{{ url_for('auth.cashier') }}">Kembali ke Halaman Utama Cashier</a>
+{% elif user.role == "admin" %}
+<a href="{{ url_for('auth.admin') }}">Kembali ke Halaman Utama Admin</a>
+{% elif user.role == "superadmin" %}
+<a href="{{ url_for('auth.superadmin') }}">Kembali Ke Mencari NIK</a>
+{% else %}
+<a href="{{ url_for('transaction.search_nik') }}">Kembali ke Menu Transaksi</a>
+{% endif %}
+</div>
+{% endblock %}

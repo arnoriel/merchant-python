@@ -1,0 +1,36 @@
+<!-- templates/auth/login.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Login</h2>
+    <form action="{{ url_for('auth.login') }}" method="post">
+        <label>Username: <input type="text" name="username" required></label><br>
+        <label>Password:
+            <input type="password" name="password" id="password" maxlength="6" required>
+            <button type="button" onclick="togglePassword()">Show Password</button>
+        </label><br>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+
+<script>
+    // Hilangkan riwayat login dari history
+    window.onload = function() {
+        if (window.history.replaceState) {
+            window.history.replaceState(null, "", window.location.href);
+        }
+    };
+
+    // Fungsi untuk toggle show/hide password
+    function togglePassword() {
+        const passwordField = document.getElementById("password");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+        } else {
+            passwordField.type = "password";
+        }
+    }
+</script>
+
+{% endblock %}

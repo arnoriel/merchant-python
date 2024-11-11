@@ -1,0 +1,38 @@
+<!-- templates/customers/customers.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Customers List</h1>
+    <a href="{{ url_for('auth.create_customer') }}">Add New Customer</a>
+    <a href="{{ url_for('auth.superadmin') }}">Go Back</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>NIK</th>
+                <th>Name</th>
+                <th>Tabung</th>
+                <th>Max Tabung</th>
+                <th>Jenis Pengguna</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td>{{ customer.nik }}</td>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.tabung }}</td>
+                <td>{{ customer.max_tabung }}</td>
+                <td>{{ customer.jenis_pengguna }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ url_for('auth.edit_customer', id=customer.id) }}">Edit</a>
+                    <a class="btn btn-primary" href="{{ url_for('auth.edit_customer_tabung', id=customer.id) }}">Rekap Tabung</a>
+                    <form action="{{ url_for('auth.delete_customer', id=customer.id) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

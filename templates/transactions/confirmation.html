@@ -1,0 +1,19 @@
+<!-- templates/confirmation.html -->
+{% extends "layout.html" %}
+{% block content %}
+<div class="container" style="width: 450px;">
+<h2>Konfirmasi Transaksi</h2>
+<br>
+<!-- Menampilkan Nama dan NIK Customer -->
+<p>Nama Customer: <strong>{{ customer.name }}</strong></p>
+<p>NIK Customer: <strong>{{ customer.nik }}</strong></p>
+<p>Jumlah Tabung:<strong> {{ jumlah_tabung }}</strong></p>
+
+<form method="POST" action="{{ url_for('transaction.confirm_transaction') }}">
+    <input type="hidden" name="customer_id" value="{{ customer.id }}">
+    <input type="hidden" name="jumlah_tabung" value="{{ jumlah_tabung }}">
+    <button type="submit" class="btn btn-primary">Proses Transaksi</button>
+</form>
+<a class="btn btn-primary" style="text-decoration: none;" href="{{ url_for('transaction.transaction_page', customer_id=customer.id) }}">Ubah Pesanan</a>
+</div>
+{% endblock %}

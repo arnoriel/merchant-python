@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Update User</h2>
+<form method="POST">
+    <label>Name: <input type="text" name="name" id="name" value="{{ user['name'] }}" required></label><br>
+
+    <label>Username: <input type="text" name="username" id="username" value="{{ user['username'] }}" required></label><br>
+
+    <label>Password (leave blank to keep current password): <input type="password" name="password" id="password"></label><br>
+
+    <label>Role: 
+        <select name="role" required>
+            <option disabled {{ 'selected' if user['role'] is none else '' }}>Pilih</option>
+            <option value="superadmin" {% if user['role'] == superadmin %}selected{% endif %}>Superadmin</option>
+            <option value="admin" {% if user['role'] == admin %}selected{% endif %}>Admin</option>
+            <option value="cashier" {% if user['role'] == cashier %}selected{% endif %}>Cashier</option>
+        </select>
+    </label><br>
+
+    <label>Tabung: <input type="number" name="tabung" id="tabung" value="{{ user['tabung'] }}" required></label><br>
+
+    <label>Kecamatan: <input type="text" name="kecamatan" id="kecamatan" value="{{ user['kecamatan'] }}" required></label><br>
+
+    <label>Kelurahan: <input type="text" name="kelurahan" id="kelurahan" value="{{ user['kelurahan'] }}" required></label><br>
+
+    <label>Kode Pos: <input type="number" name="kode_pos" id="kode_pos" value="{{ user['kode_pos'] }}" required></label><br>
+
+    <button type="submit">Update User</button>
+</form>
+{% endblock %}

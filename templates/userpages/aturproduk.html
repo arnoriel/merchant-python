@@ -1,0 +1,16 @@
+<!-- templates/userpages/aturproduk.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+    {# Tombol kembali sesuai role user #}
+    {% if current_user['role'] == 'superadmin' %}
+        <a href="{{ url_for('auth.superadmin') }}">Kembali</a>
+    {% elif current_user['role'] == 'admin' %}
+        <a href="{{ url_for('auth.admin') }}">Kembali</a>
+    {% elif current_user['role'] == 'cashier' %}
+        <a href="{{ url_for('auth.cashier') }}">Kembali</a>
+    {% endif %}
+
+    <h2>Jumlah Tabung Tersisa</h2>
+    <p>{{ current_user['tabung'] }}</p> {# Menampilkan jumlah tabung user yang login #}
+{% endblock %}

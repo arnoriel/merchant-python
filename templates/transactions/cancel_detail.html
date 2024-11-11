@@ -1,0 +1,15 @@
+<!-- /templates/transactions/cancel_detail.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Cancel Transaction Detail</h1>
+    <p>Customer Name: {{ record.customer_name }}</p>
+    <p>NIK: {{ record.customer_nik }}</p>
+    <p>Jumlah Tabung: {{ record.jumlah_tabung }}</p>
+    <p>Responsible User: {{ record.username_responsible }}</p>
+    <p>Cancel Timestamp: {{ record.cancel_timestamp }}</p>
+    <p>Alasan: {{record.reasons}}</p>
+    <a href="{{ url_for('transaction.cancel_history') }}">Back to Cancel History</a>
+</div>
+{% endblock %}

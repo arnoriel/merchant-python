@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container" style="width: 450px;">
+<center><h1>Transaksi Tabung</h1></center>
+<br><!-- Link Kembali berdasarkan peran user -->
+{% if user.role == "cashier" %}
+    <a href="{{ url_for('auth.cashier') }}" style="color: blue; text-decoration: none;">Ganti Pelanggan</a>
+{% elif user.role == "admin" %}
+    <a href="{{ url_for('auth.admin') }}" style="color: blue; text-decoration: none;">Ganti Pelanggan</a>
+{% elif user.role == "superadmin" %}
+    <a href="{{ url_for('auth.superadmin') }}" style="color: blue; text-decoration: none;">Ganti Pelanggan</a>
+{% else %}
+    <a href="{{ url_for('transaction.search_nik') }}">Ganti Pelanggan</a>
+{% endif %}
+<br>
+<br>
+{% if error_message %}
+    <div class="alert alert-danger">{{ error_message }}</div>
+{% endif %}
+
+<p>Customer: <b>{{ customer.name }}</b></p>
+<p>NIK: <b>{{ customer.nik }}</b></p>
+<p>Tabung Dimiliki: <b>{{ customer.tabung }} / {{ customer.max_tabung }}</b></p>
+<p>Jenis Pengguna: <b>{{ customer.jenis_pengguna }}</b></p>
+<p>Cashier: <b>{{ user.name }}</b></p>
+
+<form method="POST" id="transaction-form">
+    <label for="jumlah_tabung">Masukkan Tabung:</label>
+    Stok Tersedia: {{ user.tabung }}
+    <div class="input-container">
+        <button type="button" class="btn-control" id="decrement" disabled>-</button>
+        <input type="number" id="jumlah_tabung" name="jumlah_tabung" min="1" max="{{ user.tabung }}" value="1" readonly>
+        <button type="button" class="btn-control" id="increment">+</button>
+    </div>
+    <button type="submit" class="btn btn-primary">Process</button>
+</form>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const input = document.getElementById("jumlah_tabung");
+        const decrementBtn = document.getElementById("decrement");
+        const incrementBtn = document.getElementById("increment");
+        const maxValue = parseInt(input.getAttribute("max"));
+
+        function updateButtons() {
+            decrementBtn.disabled = parseInt(input.value) <= 1;
+            incrementBtn.disabled = parseInt(input.value) >= maxValue;
+        }
+
+        decrementBtn.addEventListener("click", function() {
+            if (parseInt(input.value) > 1) {
+                input.value = parseInt(input.value) - 1;
+                updateButtons();
+            }
+        });
+
+        incrementBtn.addEventListener("click", function() {
+            if (parseInt(input.value) < maxValue) {
+                input.value = parseInt(input.value) + 1;
+                updateButtons();
+            }
+        });
+
+        updateButtons();
+    });
+</script>
+{% endblock %}

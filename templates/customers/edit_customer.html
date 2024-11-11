@@ -1,0 +1,27 @@
+<!-- templates/customers/edit_customer.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Edit Customer</h1>
+    <form action="{{ url_for('auth.edit_customer', id=customer.id) }}" method="post">
+        <label for="nik">NIK:</label>
+        <input type="text" id="nik" name="nik" value="{{ customer.nik }}" required><br>
+        
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ customer.name }}" required><br>
+        
+        <label for="max_tabung">Max Tabung:</label>
+        <input type="number" id="max_tabung" name="max_tabung" value="{{ customer.max_tabung }}" required><br>
+        
+        <label>Jenis Pengguna:
+            <select name="jenis_pengguna">
+                <option selected disabled>Pilih</option>
+                <option value="Reguler" {% if customer.jenis_pengguna == 'Reguler' %}selected{% endif %}>Reguler</option>
+                <option value="Wirausaha" {% if customer.jenis_pengguna == 'Wirausaha' %}selected{% endif %}>Wirausaha</option>
+            </select>
+        </label><br>
+        
+        <button class="btn btn-primary" type="submit">Update Customer</button>
+    </form>
+    <a href="{{ url_for('auth.get_all_customers') }}">Back to Customers List</a>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <center>
+        <h1>{{ user["name"] }}</h1>
+        <h3>Detail User</h3>
+        <br>
+        <div class="profile-container">
+            <p><strong>Username:</strong> {{ user["username"] }}</p>
+            <p><strong>Kecamatan:</strong> {{ user["kecamatan"] }}</p>
+            <p><strong>Kelurahan:</strong> {{ user["kelurahan"] }}</p>
+            <p><strong>Kode Pos:</strong> {{ user["kode_pos"] }}</p>
+        </div>
+        <!-- Link Kembali berdasarkan peran user -->
+        {% if user.role == "cashier" %}
+        <a style="text-decoration: none;" href="{{ url_for('auth.cashier') }}">Kembali ke Halaman Utama Cashier</a>
+        {% elif user.role == "admin" %}
+        <a style="text-decoration: none;" href="{{ url_for('auth.admin') }}">Kembali ke Halaman Utama Admin</a>
+        {% elif user.role == "superadmin" %}
+        <a style="text-decoration: none;" href="{{ url_for('auth.superadmin') }}">Kembali ke Halaman Utama Superadmin</a>
+        {% else %}
+        <a style="text-decoration: none;" href="{{ url_for('transaction.search_nik') }}">Kembali ke Menu Transaksi</a>
+        {% endif %}
+    </center>
+{% endblock %}

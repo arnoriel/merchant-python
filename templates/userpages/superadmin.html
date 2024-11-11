@@ -1,0 +1,116 @@
+<!-- templates/userpages/superadmin.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <!-- Menampilkan Flash Message -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div id="flash-message">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    <br>
+    <center>
+        <img src="{{ url_for('static', filename='images/hero.png') }}" style="height: 50px; width: 300px;">
+    </center>
+    <br>
+    <h1>Welcome, Superadmin</h1>
+    <p>You have access to Superadmin features.</p>
+    <form action="{{ url_for('transaction.search_nik') }}" method="POST">
+        <label for="nik">Cari NIK:</label>
+        <input type="number" id="nik" name="nik" required>
+        <button type="submit" class="btn btn-primary">Cari</button>
+    </form>
+    <br>
+    <center>
+        <img src="{{ url_for('static', filename='images/penipuan.png') }}" style="width: 250px;">
+    </center>
+    <br>
+    <center>
+        <button class="btn-icon-logout" onclick="showLogoutModal()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </center>
+</div>
+
+<!-- Modal Konfirmasi Logout -->
+<div id="logoutModal" class="modal">
+    <div class="modal-content">
+        <h2>Confirm Logout</h2>
+        <p>Are you sure you want to logout?</p>
+        <button class="btn btn-cancel" onclick="closeLogoutModal()">Cancel</button>
+        <form action="{{ url_for('auth.logout') }}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-confirm">Logout</button>
+        </form>
+    </div>
+</div>
+
+<div class="button-container">
+    <a class="btn-icon" href="{{ url_for('auth.register') }}">
+        <i class="fas fa-user-plus"></i> Tambah User
+    </a>
+    <a class="btn-icon" href="{{ url_for('auth.get_all_users') }}">
+        <i class="fas fa-users"></i> View Users
+    </a>
+    <a class="btn-icon" href="{{ url_for('transaction.transaction_history') }}">
+        <i class="fas fa-exchange-alt"></i> Transaksi
+    </a>
+    <a class="btn-icon" href="{{ url_for('auth.atur_produk') }}">
+        <i class="fas fa-box"></i> Atur Produk
+    </a>
+    <a class="btn-icon" href="{{ url_for('auth.profile') }}">
+        <i class="fas fa-user"></i> Profil
+    </a>
+    <a class="btn-icon" href="{{ url_for('auth.get_all_customers') }}">
+        <i class="fas fa-address-book"></i> View Customers
+    </a>
+    <a class="btn-icon" href="{{ url_for('transaction.cancel_history') }}">
+        <i class="fas fa-history"></i> Cancel History
+    </a>
+</div>
+
+<script>
+    // Show the modal
+    function showLogoutModal() {
+        document.getElementById("logoutModal").style.display = "flex";
+    }
+
+    // Hide the modal
+    function closeLogoutModal() {
+        document.getElementById("logoutModal").style.display = "none";
+    }
+
+    // Hide modal if the user clicks outside of it
+    window.onclick = function (event) {
+        var modal = document.getElementById("logoutModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+</script>
+
+<script type="text/javascript">
+        (function () {
+            history.pushState(null, null, location.href);
+            window.onpopstate = function () {
+                history.pushState(null, null, location.href);
+            };
+        })();
+</script>
+
+<script>
+    // Menghilangkan flash message setelah 3 detik
+    setTimeout(function () {
+        var flashMessage = document.getElementById("flash-message");
+        if (flashMessage) {
+            flashMessage.style.display = "none";
+        }
+    }, 3000);
+</script>
+
+{% endblock %}

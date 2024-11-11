@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container" style="width: 450px;">
+<h2>Struk Transaksi</h2>
+
+<p><b>Transaksi Berhasil!</b></p>
+<p>Kasir: {{ user.name }}</p>
+<b>Detail Transaksi</b>
+<br>
+<center><b>Lunas</b></center>
+<br>
+<p>Pelanggan: {{ customer.name }}</p>
+<p>Pembayaran: Tunai</p>
+<p>NIK Pelanggan: {{ customer.nik }}</p>
+<p>Jumlah Tabung: {{ jumlah_tabung }}</p>
+
+<center>
+<!-- Link Kembali berdasarkan peran user -->
+{% if user.role == "cashier" %}
+    <a href="{{ url_for('auth.cashier') }}">Kembali ke Halaman Utama</a>
+{% elif user.role == "admin" %}
+    <a href="{{ url_for('auth.admin') }}">Kembali ke Halaman Utama</a>
+{% elif user.role == "superadmin" %}
+    <a href="{{ url_for('auth.superadmin') }}">Kembali ke Halaman Utama</a>
+{% else %}
+    <a href="{{ url_for('transaction.search_nik') }}">Kembali ke Menu Transaksi</a>
+</div>
+{% endif %}
+</center>
+{% endblock %}

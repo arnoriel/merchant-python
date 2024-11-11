@@ -1,0 +1,13 @@
+<!-- templates/customers/edit_customer_tabung.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Rekap Tabung Milik {{ customer.name }}</h1>
+    <form action="{{ url_for('auth.edit_customer_tabung', id=customer.id) }}" method="post">
+        <label for="tabung">Tabung:</label>
+        <input type="number" id="tabung" name="tabung" value="{{ customer.tabung }}" required><br>
+        
+        <button class="btn btn-primary" type="submit">Update Tabung</button>
+    </form>
+    <a href="{{ url_for('auth.get_all_customers') }}">Back to Customers List</a>
+{% endblock %}

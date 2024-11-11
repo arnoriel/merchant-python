@@ -1,0 +1,10 @@
+<!-- templates/input_nik.html -->
+{% extends "layout.html" %}
+{% block content %}
+<h2>Masukkan NIK Customer</h2>
+<form method="post" action="{{ url_for('transaction.transaction') }}">
+    <input type="text" name="nik" placeholder="Masukkan NIK" required>
+    <input type="hidden" name="user_id" value="{{ user.id }}">
+    <button type="submit">Cari</button>
+</form>
+{% endblock %}
