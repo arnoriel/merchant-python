@@ -34,19 +34,31 @@ def search_nik():
         # Jika NIK tidak ditemukan, tampilkan pesan flash
         flash("NIK tidak ditemukan", "error")
         
-        # Cek user_role dari session dan redirect sesuai role
+        # Cek user_role dari session dan render template yang sesuai tanpa redirect
         user_role = session.get('user_role')
         if user_role == "superadmin":
-            return redirect(url_for('auth.superadmin'))
+            return render_template('userpages/superadmin.html')
         elif user_role == "admin":
-            return redirect(url_for('auth.admin'))
+            return render_template('userpages/admin.html')
         elif user_role == "cashier":
-            return redirect(url_for('auth.cashier'))
+            return render_template('userpages/cashier.html')
         
-        # Jika tidak ada role di session, tetap di halaman pencarian dengan pesan flash
-        return render_template('transactions/search_nik.html')
+        # Jika tidak ada user role, langsung kembalikan ke halaman dashboard default (misalnya ke 'admin')
+        flash("Role tidak ditemukan. Mengarah ke halaman admin.", "warning")
+        return render_template('userpages/admin.html')
 
-    return render_template('transactions/search_nik.html')
+    # Jika request method GET, langsung arahkan ke halaman sesuai peran
+    user_role = session.get('user_role')
+    if user_role == "superadmin":
+        return render_template('userpages/superadmin.html')
+    elif user_role == "admin":
+        return render_template('userpages/admin.html')
+    elif user_role == "cashier":
+        return render_template('userpages/cashier.html')
+
+    # Jika tidak ada user role, langsung kembalikan ke halaman dashboard default
+    flash("Role tidak ditemukan. Mengarah ke halaman admin.", "warning")
+    return render_template('userpages/admin.html')
 
 # Halaman transaksi setelah NIK ditemukan
 @transaction_bp.route('/transaction/<customer_id>', methods=['GET', 'POST'])

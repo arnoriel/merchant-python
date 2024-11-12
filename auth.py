@@ -50,7 +50,6 @@ def register():
 
     return render_template("users/register.html")
 
-# Login User
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     # Cek jika pengguna sudah login
@@ -65,9 +64,7 @@ def login():
                 user = next((u for u in users if u["id"] == user_id), None)
                 if user:
                     return redirect(url_for(f"auth.{user['role']}"))
-
         except Exception as e:
-            # Jika token tidak valid atau terjadi error, lanjut ke login
             pass
 
     if request.method == "POST":
@@ -87,6 +84,9 @@ def login():
         # Buat token akses
         access_token = create_access_token(identity=user["id"])
         logged_in_users[user["id"]] = access_token
+
+        # Set role ke session
+        session['user_role'] = user["role"]
 
         # Tentukan halaman tujuan sesuai peran
         if user["role"] == "superadmin":
@@ -108,22 +108,18 @@ def login():
     response.headers["Cache-Control"] = "no-store"
     return response
 
-# Middleware untuk mengecek status login
 @auth_bp.before_request
 def check_login_status():
     if request.path == "/auth/login" and "access_token" in request.cookies:
-        user_id = get_jwt_identity()
-        users = load_data()["users"]
-        user = next((u for u in users if u["id"] == user_id), None)
+        user_role = session.get('user_role')
         
         # Alihkan pengguna sesuai dengan perannya jika sudah login
-        if user:
-            if user["role"] == "superadmin":
-                return redirect(url_for("auth.superadmin"))
-            elif user["role"] == "admin":
-                return redirect(url_for("auth.admin"))
-            elif user["role"] == "cashier":
-                return redirect(url_for("auth.cashier"))
+        if user_role == "superadmin":
+            return redirect(url_for("auth.superadmin"))
+        elif user_role == "admin":
+            return redirect(url_for("auth.admin"))
+        elif user_role == "cashier":
+            return redirect(url_for("auth.cashier"))
 
 # Logout User
 @auth_bp.route("/logout", methods=["POST"])
