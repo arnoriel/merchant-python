@@ -35,17 +35,26 @@
     </div>
     <button type="submit" class="btn btn-primary">Process</button>
 </form>
+<div id="notification" style="display: none; color: red;">Penyaluran Gas sudah sampai Jumlah Maximal</div>
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const input = document.getElementById("jumlah_tabung");
         const decrementBtn = document.getElementById("decrement");
         const incrementBtn = document.getElementById("increment");
-        const maxValue = parseInt(input.getAttribute("max"));
+        const notification = document.getElementById("notification");
+        const maxTabung = 5;
 
         function updateButtons() {
-            decrementBtn.disabled = parseInt(input.value) <= 1;
-            incrementBtn.disabled = parseInt(input.value) >= maxValue;
+            const currentValue = parseInt(input.value);
+            decrementBtn.disabled = currentValue <= 1;
+            incrementBtn.disabled = currentValue >= maxTabung;
+            
+            if (currentValue >= maxTabung) {
+                notification.style.display = "block";
+            } else {
+                notification.style.display = "none";
+            }
         }
 
         decrementBtn.addEventListener("click", function() {
@@ -56,7 +65,7 @@
         });
 
         incrementBtn.addEventListener("click", function() {
-            if (parseInt(input.value) < maxValue) {
+            if (parseInt(input.value) < maxTabung) {
                 input.value = parseInt(input.value) + 1;
                 updateButtons();
             }
