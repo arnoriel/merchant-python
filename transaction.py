@@ -109,9 +109,8 @@ def confirm_transaction():
         user["tabung"] -= jumlah_tabung
         customer["tabung"] += jumlah_tabung
 
-        # Record the transaction in history with a unique ID
         transaction_record = {
-            "id": str(uuid.uuid4()),  # Generate a unique ID for each transaction
+            "id": str(uuid.uuid4()),
             "customer_name": customer["name"],
             "customer_nik": customer["nik"],
             "jumlah_tabung": jumlah_tabung,
@@ -121,11 +120,13 @@ def confirm_transaction():
         data["history"].append(transaction_record)
         save_data(data)
 
+        # Record the transaction to the logbook
+        record_to_logbook(jumlah_tabung, 16000)  # Assuming the price per tabung is Rp. 16,000
+
         return render_template('transactions/struct.html', user=user, customer=customer, jumlah_tabung=jumlah_tabung)
 
     flash("Error processing transaction", "error")
     return redirect(url_for('transaction.transaction_page', customer_id=customer_id))
-
 
 @transaction_bp.route('/transaction/history')
 @jwt_required()
@@ -243,3 +244,44 @@ def cancel_detail(cancel_id):
         flash("Record pembatalan tidak ditemukan", "error")
         return redirect(url_for('transaction.cancel_history'))
 
+def record_to_logbook(jumlah_tabung, harga_per_tabung):
+    # Load existing logbook data
+    try:
+        with open("logbook.json", "r") as f:
+            logbook = json.load(f)
+    except FileNotFoundError:
+        logbook = {"transactions": []}
+
+    # Calculate total amount
+    total_amount = jumlah_tabung * harga_per_tabung
+
+    # Record the transaction
+    transaction_record = {
+        "id": str(uuid.uuid4()),
+        "jumlah_tabung": jumlah_tabung,
+        "total_amount": total_amount,
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+    logbook["transactions"].append(transaction_record)
+
+    # Save the logbook
+    with open("logbook.json", "w") as f:
+        json.dump(logbook, f, indent=4)
+
+@transaction_bp.route('/transaction/logbook')
+@jwt_required()
+def view_logbook():
+    try:
+        with open("logbook.json", "r") as f:
+            logbook = json.load(f)
+    except FileNotFoundError:
+        logbook = {"transactions": []}
+
+    # Filter transactions for today
+    today = datetime.now().strftime("%Y-%m-%d")
+    daily_transactions = [t for t in logbook["transactions"] if t["timestamp"].startswith(today)]
+
+    total_tabung = sum(t["jumlah_tabung"] for t in daily_transactions)
+    total_amount = sum(t["total_amount"] for t in daily_transactions)
+
+    return render_template('transactions/logbook.html', transactions=daily_transactions, total_tabung=total_tabung, total_amount=total_amount)
