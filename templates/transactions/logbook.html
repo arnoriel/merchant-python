@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logbook Transaksi</title>
+</head>
+<body>
+    <h1>Logbook Transaksi Hari Ini</h1>
+    <p>Total Tabung: {{ total_tabung }}</p>
+    <p>Total Uang Masuk: Rp. {{ total_amount }}</p>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Jumlah Tabung</th>
+            <th>Total Uang</th>
+            <th>Waktu</th>
+        </tr>   
+        {% for transaction in transactions %}
+        <tr>
+            <td>{{ transaction.id }}</td>
+            <td>{{ transaction.jumlah_tabung }}</td>
+            <td>Rp. {{ transaction.total_amount }}</td>
+            <td>{{ transaction.timestamp }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
